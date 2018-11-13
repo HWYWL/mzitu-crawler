@@ -46,7 +46,7 @@ class MeiZe:
     # 下载妹子
     def downloading(self):
         cnt = 0
-        print('当前页总个数: %s' % len(self.all_a))
+        print('当前页妹子总数: %s' % len(self.all_a))
         for a in self.all_a:
             print('正在下载第 %s 个妹子...' % (cnt + 1))
             os.makedirs(os.path.join(os.getcwd(), self.all_a_title[cnt]))
@@ -55,8 +55,9 @@ class MeiZe:
             for i in range(1, self.all_a_max[cnt] + 1):
                 nurl = a + '/' + str(i)
                 imghtml = self.req.get(nurl, headers=self.headers)
-                aaa = BeautifulSoup(imghtml.text, 'lxml').find('div', class_='main-image').find('img')['src']
-                img = self.req.get(aaa, headers=self.headers)
+                optimize = BeautifulSoup(imghtml.text, 'lxml').find('div', class_='main-image').find('img')['src']
+
+                img = self.req.get(optimize, headers=self.headers)
                 f = open(str(i) + '.jpg', 'ab')
                 f.write(img.content)
                 f.close()
